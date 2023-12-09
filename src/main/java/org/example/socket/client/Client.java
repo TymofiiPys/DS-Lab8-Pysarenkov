@@ -31,6 +31,7 @@ public class Client {
         }
         scanner = new Scanner(System.in);
         System.out.println("\n===================================\n");
+        menu();
     }
 
     private void outputSubjects(String listStr) {
@@ -93,7 +94,7 @@ public class Client {
                     query += name;
                     break;
             }
-            out.write(query);
+            out.println(query);
             String[] response = in.readLine().split("%");
             if(response[0].equals("1")){
                 System.out.println(response[1]);
@@ -156,5 +157,9 @@ public class Client {
                 System.out.println("Помилка виконання запиту");
             }
         }
+    }
+
+    public static void main(String[] args) {
+        new Client();
     }
 }

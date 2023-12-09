@@ -126,7 +126,9 @@ public class Server {
         int i = 0;
         int size = list.size();
         for (Teacher t : list) {
-            res += t.code + fieldSplitter + t.name;
+            res += t.code;
+            res += fieldSplitter;
+            res += t.name;
             if(i != size - 1)
                 res += rowSplitter;
             i++;
@@ -139,7 +141,11 @@ public class Server {
         int i = 0;
         int size = list.size();
         for (Subject s : list) {
-            res += s.code + fieldSplitter + s.name + fieldSplitter + s.teacher.name;
+            res += s.code;
+            res += fieldSplitter;
+            res += s.name;
+            res += fieldSplitter;
+            res += s.teacher.name;
             if(i != size - 1)
                 res += rowSplitter;
             i++;
@@ -154,7 +160,9 @@ public class Server {
      */
     private boolean processQuery() {
         try {
-            String[] query = in.readLine().split("%");
+            String queryFull = in.readLine();
+            if (queryFull == null) return false;
+            String[] query = queryFull.split("" + splitter);
             String response = "";
             int command = Integer.parseInt(query[0]);
             List<Teacher> teacherList;
@@ -233,10 +241,14 @@ public class Server {
                     return false;
                 }
             }
-            out.write(response);
+            out.println(response);
             return true;
         } catch (IOException e) {
             return false;
         }
+    }
+
+    public static void main(String[] args) {
+        new Server();
     }
 }

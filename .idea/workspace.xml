@@ -4,8 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1f15ebc7-b050-4418-af7c-f73b67c431a4" name="Changes" comment="Finished Client for Sockets">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+    <list default="true" id="1f15ebc7-b050-4418-af7c-f73b67c431a4" name="Changes" comment="Finished Server for Sockets">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/socket/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/socket/client/Client.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/socket/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/socket/server/Server.java" afterDir="false" />
@@ -73,7 +72,7 @@
       <updated>1701820378200</updated>
       <workItem from="1701820379217" duration="110000" />
       <workItem from="1701867787042" duration="11624000" />
-      <workItem from="1702144613064" duration="10655000" />
+      <workItem from="1702144613064" duration="11541000" />
     </task>
     <task id="LOCAL-00001" summary="Added task descr in app.java and packages for server and client parts">
       <option name="closed" value="true" />
@@ -99,7 +98,15 @@
       <option name="project" value="LOCAL" />
       <updated>1702155360425</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Finished Server for Sockets">
+      <option name="closed" value="true" />
+      <created>1702158576138</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1702158576138</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -120,7 +127,19 @@
     <MESSAGE value="Added task descr in app.java and packages for server and client parts" />
     <MESSAGE value="Server and Client initialization, Client menu" />
     <MESSAGE value="Finished Client for Sockets" />
-    <option name="LAST_COMMIT_MESSAGE" value="Finished Client for Sockets" />
+    <MESSAGE value="Finished Server for Sockets" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finished Server for Sockets" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/socket/client/Client.java</url>
+          <line>47</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
