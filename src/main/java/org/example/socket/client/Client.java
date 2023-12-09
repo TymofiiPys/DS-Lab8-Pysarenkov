@@ -96,6 +96,7 @@ public class Client {
             out.write(query);
             String[] response = in.readLine().split("%");
             if(response[0].equals("1")){
+                System.out.println(response[1]);
                 return 1;
             }
             switch (command) {

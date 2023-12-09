@@ -8,6 +8,7 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.SQLException;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -19,6 +20,9 @@ public class Server {
     private PrintWriter out;
     private BufferedReader in;
     private AcDepDAO dao;
+    private char splitter = '%';
+    private char rowSplitter = '#';
+    private char fieldSplitter = ':';
 
     public Server() {
         try {
@@ -36,6 +40,7 @@ public class Server {
 
     /**
      * Запуск сервера за портом 8080
+     *
      * @throws IOException
      */
     private void startServer() throws IOException {
@@ -60,99 +65,175 @@ public class Server {
             } catch (IOException e) {
                 throw new RuntimeException("Помилка створення IO потоків", e);
             }
-            while (processQuery());
+            while (processQuery()) ;
         }
+    }
+
+    private int getIDT(List<Teacher> list) {
+        int i = 1;
+        list.sort(new Comparator<Teacher>() {
+            @Override
+            public int compare(Teacher t1, Teacher t2) {
+                return Integer.compare(t1.code, t2.code);
+            }
+        });
+        for (Teacher t : list) {
+            if (t.code != i) {
+                return i;
+            }
+            i++;
+        }
+        return i;
+    }
+
+    private int getIDS(List<Subject> list) {
+        int i = 1;
+        list.sort(new Comparator<Subject>() {
+            @Override
+            public int compare(Subject t1, Subject t2) {
+                return Integer.compare(t1.code, t2.code);
+            }
+        });
+        for (Subject t : list) {
+            if (t.code != i) {
+                return i;
+            }
+            i++;
+        }
+        return i;
+    }
+
+    private Teacher getTeacher(List<Teacher> list, String name) {
+        for (Teacher t : list) {
+            if (t.name.equals(name)) {
+                return t;
+            }
+        }
+        return null;
+    }
+
+    private Subject getSubject(List<Subject> list, String name) {
+        for (Subject t : list) {
+            if (t.name.equals(name)) {
+                return t;
+            }
+        }
+        return null;
+    }
+
+    private String printListT(List<Teacher> list) {
+        String res = "";
+        int i = 0;
+        int size = list.size();
+        for (Teacher t : list) {
+            res += t.code + fieldSplitter + t.name;
+            if(i != size - 1)
+                res += rowSplitter;
+            i++;
+        }
+        return res;
+    }
+
+    private String printListS(List<Subject> list) {
+        String res = "";
+        int i = 0;
+        int size = list.size();
+        for (Subject s : list) {
+            res += s.code + fieldSplitter + s.name + fieldSplitter + s.teacher.name;
+            if(i != size - 1)
+                res += rowSplitter;
+            i++;
+        }
+        return res;
     }
 
     /**
      * Обробка запитів від клієнта
+     *
      * @return результат виконання обробки. true - успіх, false - неуспіх
      */
     private boolean processQuery() {
         try {
-            int query = in.readInt();
+            String[] query = in.readLine().split("%");
+            String response = "";
+            int command = Integer.parseInt(query[0]);
             List<Teacher> teacherList;
             List<Subject> subjectList;
-            switch (query) {
+            switch (command) {
                 case 1 -> {
                     int id = getIDT(dao.readTeachers(null));
-                    dao.createTeacher(new Teacher(id, name));
+                    dao.createTeacher(new Teacher(id, query[1]));
+                    response = "" + 0;
                 }
                 case 2 -> {
-
-                    Teacher del = getTeacher(dao.readTeachers(null), name);
+                    Teacher del = getTeacher(dao.readTeachers(null), query[1]);
                     if (del == null) {
-                        System.out.println("Учителя із даним ПІБ не знайдено");
-                        continue;
+                        response = "" + 1 + splitter + "Учителя із даним ПІБ не знайдено";
+                    } else {
+                        dao.deleteTeacher(del);
+                        response = "" + 0 + splitter + "Успішно";
                     }
-                    dao.deleteTeacher(del);
                 }
                 case 3 -> {
-                    System.out.print("Назва предмету: ");
-                    String name = scanner.nextLine();
-                    System.out.print("ПІБ учителя (залиште поле пустим, якщо викладача на предмет немає): ");
-                    String teacherName = scanner.nextLine();
                     int id = getIDS(dao.readSubjects(null));
-                    dao.createSubject(new Subject(id, name, getTeacher(dao.readTeachers(null), teacherName)));
+                    dao.createSubject(new Subject(id, query[1], getTeacher(dao.readTeachers(null), query[2])));
+                    response = "" + 0;
                 }
                 case 4 -> {
-                    System.out.print("Назва предмету: ");
-                    String name = scanner.nextLine();
-                    Subject del = getSubject(dao.readSubjects(null), name);
+                    Subject del = getSubject(dao.readSubjects(null), query[1]);
                     if (del == null) {
-                        System.out.println("Предмет із даною назвою не знайдено");
-                        continue;
+                        response = "" + 1 + splitter + "Предмет із даною назвою не знайдено";
+                    } else {
+                        dao.deleteSubject(del);
+                        response = "" + 0 + splitter + "Успішно";
                     }
-                    dao.deleteSubject(del);
                 }
                 case 5 -> {
-                    System.out.print("ПІБ учителя: ");
-                    String name = scanner.nextLine();
-                    Teacher upd = getTeacher(dao.readTeachers(null), name);
+                    Teacher upd = getTeacher(dao.readTeachers(null), query[1]);
                     if (upd == null) {
-                        System.out.println("Учителя із даним ПІБ не знайдено");
-                        continue;
+                        response = "" + 1 + splitter + "Учителя із даним ПІБ не знайдено";
+                    } else {
+                        upd.name = query[2];
+                        dao.updateTeachers(upd);
+                        response = "" + 0 + splitter + "Успішно";
                     }
-                    System.out.print("Нове ПІБ (пусте поле - без змін): ");
-                    String newName = scanner.nextLine();
-                    if (!newName.isBlank())
-                        upd.name = newName;
-                    dao.updateTeachers(upd);
                 }
                 case 6 -> {
-                    int leftMargin;
-                    try {
-                        System.out.print("Введіть ID викладача");
-                        leftMargin = Integer.parseInt(scanner.nextLine());
-                    } catch (NumberFormatException e) {
-                        continue;
+                    Teacher teacher = getTeacher(dao.readTeachers(null), query[1]);
+                    if (teacher == null) {
+                        response = "" + 1 + splitter + "Учителя із даним ПІБ не знайдено";
+                    } else {
+                        subjectList = dao.readSubjects("SELECT * FROM Предмети WHERE Викладач = " + teacher.code);
+                        response = "" + 0 + splitter + "Кількість дисциплін у викладача: " + subjectList.size();
                     }
-                    subjectList = dao.readSubjects("SELECT * FROM Предмети WHERE Викладач >= " + leftMargin + "AND Викладач <= " + leftMargin);
-                    printListS(subjectList);
                 }
                 case 7 -> {
-                    subjectList = dao.readSubjects(null);
-                    printListS(subjectList);
+                    subjectList = dao.readSubjects("SELECT * FROM Предмети WHERE Назва = " + query[1]);
+                    if(subjectList.isEmpty()) {
+                        response = "" + 1 + splitter + "Не знайдено такого предмету";
+                    } else {
+                        response = "" + 0 + splitter + printListS(subjectList);
+                    }
                 }
                 case 8 -> {
                     teacherList = dao.readTeachers(null);
-                    printListT(teacherList);
+                    response = "" + 0 + splitter + printListT(teacherList);
                 }
                 case 9 -> {
-                    int leftMargin;
-                    try {
-                        System.out.print("Введіть ID викладача");
-                        leftMargin = Integer.parseInt(scanner.nextLine());
-                    } catch (NumberFormatException e) {
-                        continue;
+                    Teacher teacher = getTeacher(dao.readTeachers(null), query[1]);
+                    if (teacher == null) {
+                        response = "" + 1 + splitter + "Учителя із даним ПІБ не знайдено";
+                    } else {
+                        subjectList = dao.readSubjects("SELECT * FROM Предмети WHERE Викладач = " + teacher.code);
+                        response = "" + 0 + splitter + printListS(subjectList);
                     }
-                    subjectList = dao.readSubjects("SELECT * FROM Предмети WHERE Викладач >= " + leftMargin + "AND Викладач <= " + leftMargin);
-                    printListS(subjectList);
                 }
                 default -> {
+                    out.write("1" + splitter + "Невідома команда");
                     return false;
                 }
             }
+            out.write(response);
             return true;
         } catch (IOException e) {
             return false;
