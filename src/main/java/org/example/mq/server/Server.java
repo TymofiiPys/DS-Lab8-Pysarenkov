@@ -53,20 +53,11 @@ public class Server {
                         response = "" + 0;
                     }
                     case 2 -> {
-                        Teacher del = AcDepUtil.getTeacher(dao.readTeachers(null), query[1]);
-                        if (del == null) {
-                            response = "" + 1 + splitter + "Учителя із даним ПІБ не знайдено";
-                        } else {
-                            dao.deleteTeacher(del);
-                            response = "" + 0 + splitter + "Успішно";
-                        }
-                    }
-                    case 3 -> {
                         int id = AcDepUtil.getIDS(dao.readSubjects(null));
                         dao.createSubject(new Subject(id, query[1], AcDepUtil.getTeacher(dao.readTeachers(null), query[2])));
                         response = "" + 0;
                     }
-                    case 4 -> {
+                    case 3 -> {
                         Subject del = AcDepUtil.getSubject(dao.readSubjects(null), query[1]);
                         if (del == null) {
                             response = "" + 1 + splitter + "Предмет із даною назвою не знайдено";
@@ -75,38 +66,11 @@ public class Server {
                             response = "" + 0 + splitter + "Успішно";
                         }
                     }
-                    case 5 -> {
-                        Teacher upd = AcDepUtil.getTeacher(dao.readTeachers(null), query[1]);
-                        if (upd == null) {
-                            response = "" + 1 + splitter + "Учителя із даним ПІБ не знайдено";
-                        } else {
-                            upd.name = query[2];
-                            dao.updateTeachers(upd);
-                            response = "" + 0 + splitter + "Успішно";
-                        }
-                    }
-                    case 6 -> {
-                        Teacher teacher = AcDepUtil.getTeacher(dao.readTeachers(null), query[1]);
-                        if (teacher == null) {
-                            response = "" + 1 + splitter + "Учителя із даним ПІБ не знайдено";
-                        } else {
-                            subjectList = dao.readSubjects("SELECT * FROM Предмети WHERE Викладач = " + teacher.code);
-                            response = "" + 0 + splitter + "Кількість дисциплін у викладача: " + subjectList.size();
-                        }
-                    }
-                    case 7 -> {
-                        subjectList = dao.readSubjects("SELECT * FROM Предмети WHERE Назва = " + query[1]);
-                        if (subjectList.isEmpty()) {
-                            response = "" + 1 + splitter + "Не знайдено такого предмету";
-                        } else {
-                            response = "" + 0 + splitter + AcDepUtil.listToStringS(subjectList);
-                        }
-                    }
-                    case 8 -> {
+                    case 4 -> {
                         teacherList = dao.readTeachers(null);
                         response = "" + 0 + splitter + AcDepUtil.listToStringT(teacherList);
                     }
-                    case 9 -> {
+                    case 5 -> {
                         Teacher teacher = AcDepUtil.getTeacher(dao.readTeachers(null), query[1]);
                         if (teacher == null) {
                             response = "" + 1 + splitter + "Учителя із даним ПІБ не знайдено";

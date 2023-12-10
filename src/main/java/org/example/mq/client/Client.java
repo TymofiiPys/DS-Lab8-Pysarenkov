@@ -59,13 +59,13 @@ public class Client implements AutoCloseable {
             String name, subj;
             switch (command) {
                 case 1:
-                case 9:
+                case 5:
                     System.out.print("ПІБ учителя: ");
                     name = scanner.nextLine();
                     query += name;
                     break;
-                case 4:
                 case 3:
+                case 2:
                     System.out.print("Назва предмету: ");
                     subj = scanner.nextLine();
                     query += subj + splitter;
@@ -81,16 +81,16 @@ public class Client implements AutoCloseable {
             }
             switch (command) {
                 case 1:
-                case 3:
+                case 2:
                     System.out.println("Успішно");
                     break;
-                case 4:
+                case 3:
                     System.out.println(response[1]);
                     break;
-                case 8:
+                case 4:
                     outputTeachers(response[1]);
                     break;
-                case 9:
+                case 5:
                     outputSubjects(response[1]);
                     break;
             }
@@ -109,10 +109,10 @@ public class Client implements AutoCloseable {
         while (true) {
             System.out.println("Оберіть команду:");
             System.out.println("1. Прийом на роботу нового викладача");
-            System.out.println("3. Додавання нової дисципліни");
-            System.out.println("4. Видалення дисципліни");
-            System.out.println("8. Отримання повного списку викладачів");
-            System.out.println("9. Отримання списку дисциплін для заданого викладача");
+            System.out.println("2. Додавання нової дисципліни");
+            System.out.println("3. Видалення дисципліни");
+            System.out.println("4. Отримання повного списку викладачів");
+            System.out.println("5. Отримання списку дисциплін для заданого викладача");
             System.out.println("0. Вихід із програми");
             try {
                 op = Integer.parseInt(scanner.nextLine());
