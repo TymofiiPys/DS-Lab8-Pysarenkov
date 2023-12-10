@@ -4,14 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1f15ebc7-b050-4418-af7c-f73b67c431a4" name="Changes" comment="Finished Sockets">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/acdep/AcDepUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/rmi/AcDepRMI.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/rmi/client/Client.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/rmi/server/AcDepRMIImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/rmi/server/Server.java" afterDir="false" />
+    <list default="true" id="1f15ebc7-b050-4418-af7c-f73b67c431a4" name="Changes" comment="Created class with utilitary functions for CRUD-operations (AcDepUtil)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/socket/ServerDAORMI.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/acdep/AcDepUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/acdep/AcDepUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/socket/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/socket/server/Server.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,7 +73,7 @@
       <workItem from="1701820379217" duration="110000" />
       <workItem from="1701867787042" duration="11624000" />
       <workItem from="1702144613064" duration="13576000" />
-      <workItem from="1702210907297" duration="169000" />
+      <workItem from="1702210907297" duration="467000" />
     </task>
     <task id="LOCAL-00001" summary="Added task descr in app.java and packages for server and client parts">
       <option name="closed" value="true" />
@@ -119,7 +115,15 @@
       <option name="project" value="LOCAL" />
       <updated>1702159562804</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Created class with utilitary functions for CRUD-operations (AcDepUtil)">
+      <option name="closed" value="true" />
+      <created>1702211133530</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1702211133530</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -142,7 +146,8 @@
     <MESSAGE value="Finished Client for Sockets" />
     <MESSAGE value="Finished Server for Sockets" />
     <MESSAGE value="Finished Sockets" />
-    <option name="LAST_COMMIT_MESSAGE" value="Finished Sockets" />
+    <MESSAGE value="Created class with utilitary functions for CRUD-operations (AcDepUtil)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Created class with utilitary functions for CRUD-operations (AcDepUtil)" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

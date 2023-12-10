@@ -1,6 +1,7 @@
 package org.example.socket.server;
 
 import org.example.acdep.AcDepDAO;
+import org.example.acdep.AcDepUtil;
 import org.example.acdep.Subject;
 import org.example.acdep.Teacher;
 
@@ -69,90 +70,6 @@ public class Server {
         }
     }
 
-    private int getIDT(List<Teacher> list) {
-        int i = 1;
-        list.sort(new Comparator<Teacher>() {
-            @Override
-            public int compare(Teacher t1, Teacher t2) {
-                return Integer.compare(t1.code, t2.code);
-            }
-        });
-        for (Teacher t : list) {
-            if (t.code != i) {
-                return i;
-            }
-            i++;
-        }
-        return i;
-    }
-
-    private int getIDS(List<Subject> list) {
-        int i = 1;
-        list.sort(new Comparator<Subject>() {
-            @Override
-            public int compare(Subject t1, Subject t2) {
-                return Integer.compare(t1.code, t2.code);
-            }
-        });
-        for (Subject t : list) {
-            if (t.code != i) {
-                return i;
-            }
-            i++;
-        }
-        return i;
-    }
-
-    private Teacher getTeacher(List<Teacher> list, String name) {
-        for (Teacher t : list) {
-            if (t.name.equals(name)) {
-                return t;
-            }
-        }
-        return null;
-    }
-
-    private Subject getSubject(List<Subject> list, String name) {
-        for (Subject t : list) {
-            if (t.name.equals(name)) {
-                return t;
-            }
-        }
-        return null;
-    }
-
-    private String printListT(List<Teacher> list) {
-        String res = "";
-        int i = 0;
-        int size = list.size();
-        for (Teacher t : list) {
-            res += t.code;
-            res += fieldSplitter;
-            res += t.name;
-            if(i != size - 1)
-                res += rowSplitter;
-            i++;
-        }
-        return res;
-    }
-
-    private String printListS(List<Subject> list) {
-        String res = "";
-        int i = 0;
-        int size = list.size();
-        for (Subject s : list) {
-            res += s.code;
-            res += fieldSplitter;
-            res += s.name;
-            res += fieldSplitter;
-            res += s.teacher.name;
-            if(i != size - 1)
-                res += rowSplitter;
-            i++;
-        }
-        return res;
-    }
-
     /**
      * Обробка запитів від клієнта
      *
@@ -169,12 +86,12 @@ public class Server {
             List<Subject> subjectList;
             switch (command) {
                 case 1 -> {
-                    int id = getIDT(dao.readTeachers(null));
+                    int id = AcDepUtil.getIDT(dao.readTeachers(null));
                     dao.createTeacher(new Teacher(id, query[1]));
                     response = "" + 0;
                 }
                 case 2 -> {
-                    Teacher del = getTeacher(dao.readTeachers(null), query[1]);
+                    Teacher del = AcDepUtil.getTeacher(dao.readTeachers(null), query[1]);
                     if (del == null) {
                         response = "" + 1 + splitter + "Учителя із даним ПІБ не знайдено";
                     } else {
@@ -183,12 +100,12 @@ public class Server {
                     }
                 }
                 case 3 -> {
-                    int id = getIDS(dao.readSubjects(null));
-                    dao.createSubject(new Subject(id, query[1], getTeacher(dao.readTeachers(null), query[2])));
+                    int id = AcDepUtil.getIDS(dao.readSubjects(null));
+                    dao.createSubject(new Subject(id, query[1], AcDepUtil.getTeacher(dao.readTeachers(null), query[2])));
                     response = "" + 0;
                 }
                 case 4 -> {
-                    Subject del = getSubject(dao.readSubjects(null), query[1]);
+                    Subject del = AcDepUtil.getSubject(dao.readSubjects(null), query[1]);
                     if (del == null) {
                         response = "" + 1 + splitter + "Предмет із даною назвою не знайдено";
                     } else {
@@ -197,7 +114,7 @@ public class Server {
                     }
                 }
                 case 5 -> {
-                    Teacher upd = getTeacher(dao.readTeachers(null), query[1]);
+                    Teacher upd = AcDepUtil.getTeacher(dao.readTeachers(null), query[1]);
                     if (upd == null) {
                         response = "" + 1 + splitter + "Учителя із даним ПІБ не знайдено";
                     } else {
@@ -207,7 +124,7 @@ public class Server {
                     }
                 }
                 case 6 -> {
-                    Teacher teacher = getTeacher(dao.readTeachers(null), query[1]);
+                    Teacher teacher = AcDepUtil.getTeacher(dao.readTeachers(null), query[1]);
                     if (teacher == null) {
                         response = "" + 1 + splitter + "Учителя із даним ПІБ не знайдено";
                     } else {
@@ -220,20 +137,20 @@ public class Server {
                     if(subjectList.isEmpty()) {
                         response = "" + 1 + splitter + "Не знайдено такого предмету";
                     } else {
-                        response = "" + 0 + splitter + printListS(subjectList);
+                        response = "" + 0 + splitter + AcDepUtil.printListS(subjectList);
                     }
                 }
                 case 8 -> {
                     teacherList = dao.readTeachers(null);
-                    response = "" + 0 + splitter + printListT(teacherList);
+                    response = "" + 0 + splitter + AcDepUtil.printListT(teacherList);
                 }
                 case 9 -> {
-                    Teacher teacher = getTeacher(dao.readTeachers(null), query[1]);
+                    Teacher teacher = AcDepUtil.getTeacher(dao.readTeachers(null), query[1]);
                     if (teacher == null) {
                         response = "" + 1 + splitter + "Учителя із даним ПІБ не знайдено";
                     } else {
                         subjectList = dao.readSubjects("SELECT * FROM Предмети WHERE Викладач = " + teacher.code);
-                        response = "" + 0 + splitter + printListS(subjectList);
+                        response = "" + 0 + splitter + AcDepUtil.printListS(subjectList);
                     }
                 }
                 default -> {

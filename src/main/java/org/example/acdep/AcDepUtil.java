@@ -7,6 +7,9 @@ import java.util.List;
  * Допоміжні функції для CRUD-операцій над базою даних
  */
 public class AcDepUtil {
+    private static char splitter = '%';
+    private static char rowSplitter = '#';
+    private static char fieldSplitter = ':';
     public static int getIDT(List<Teacher> list) {
         int i = 1;
         list.sort(new Comparator<Teacher>() {
@@ -67,6 +70,23 @@ public class AcDepUtil {
             res += t.code;
             res += fieldSplitter;
             res += t.name;
+            if(i != size - 1)
+                res += rowSplitter;
+            i++;
+        }
+        return res;
+    }
+
+    public static String printListS(List<Subject> list) {
+        String res = "";
+        int i = 0;
+        int size = list.size();
+        for (Subject s : list) {
+            res += s.code;
+            res += fieldSplitter;
+            res += s.name;
+            res += fieldSplitter;
+            res += s.teacher.name;
             if(i != size - 1)
                 res += rowSplitter;
             i++;
