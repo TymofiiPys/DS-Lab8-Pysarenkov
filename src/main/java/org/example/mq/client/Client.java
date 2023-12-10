@@ -1,39 +1,30 @@
-package org.example.socket.client;
+package org.example.mq.client;
 
-import java.io.*;
-import java.net.Socket;
+import com.rabbitmq.client.AMQP;
+import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.ConnectionFactory;
+
+import java.io.IOException;
 import java.util.Scanner;
+import java.util.UUID;
+import java.util.concurrent.*;
 
-/**
- * Клас для надсилання команд на сервер та виведення
- * різноманітної інформації від сервера
- */
-public class Client {
-    private Socket socket;
-    private PrintWriter out;
-    private BufferedReader in;
-    private Scanner scanner;
+public class Client implements AutoCloseable {
+
+    private Connection connection;
+    private Channel channel;
+    private String requestQueueName = "rpc_queue";
     private final char splitter = '%';
     private final String rowSplitter = "#";
     private final String fieldSplitter = ":";
 
-    public Client() {
-        try {
-            System.out.println("З'єднуємось...");
-            socket = new Socket("localhost", 8080);
-            System.out.println("Успішно!");
-        } catch (IOException e) {
-            throw new RuntimeException("Не вийшло з'єднатись із сервером", e);
-        }
-        try {
-            out = new PrintWriter(socket.getOutputStream(), true);
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        } catch (IOException e) {
-            throw new RuntimeException("Помилка створення IO потоків", e);
-        }
-        scanner = new Scanner(System.in);
-        System.out.println("\n===================================\n");
-        menu();
+    public Client() throws IOException, TimeoutException {
+        ConnectionFactory factory = new ConnectionFactory();
+        factory.setHost("localhost");
+
+        connection = factory.newConnection();
+        channel = connection.createChannel();
     }
 
     private void outputSubjects(String listStr) {
@@ -61,32 +52,19 @@ public class Client {
      * @param command - тип запиту
      * @return статус виконання запиту. 0 - успіх, інше - невдача
      */
-    public int sendCommand(int command) {
+    private int sendCommand(int command) throws ExecutionException, InterruptedException {
         try {
+            Scanner scanner = new Scanner(System.in);
             String query = "" + command + splitter;
             String name, subj;
             switch (command) {
                 case 1:
-                case 2:
-                case 6:
                 case 9:
                     System.out.print("ПІБ учителя: ");
                     name = scanner.nextLine();
                     query += name;
                     break;
-                case 5:
-                    System.out.print("ПІБ учителя: ");
-                    name = scanner.nextLine();
-                    query += name + splitter;
-                    System.out.print("Нове ПІБ (пусте поле - без змін): ");
-                    String newName = scanner.nextLine();
-                    query += newName.equals("") ? name : newName;
                 case 4:
-                case 7:
-                    System.out.print("Назва предмету: ");
-                    subj = scanner.nextLine();
-                    query += subj;
-                    break;
                 case 3:
                     System.out.print("Назва предмету: ");
                     subj = scanner.nextLine();
@@ -96,9 +74,8 @@ public class Client {
                     query += name;
                     break;
             }
-            out.println(query);
-            String[] response = in.readLine().split("%");
-            if(response[0].equals("1")){
+            String[] response = call(query).split("%");
+            if (response[0].equals("1")) {
                 System.out.println(response[1]);
                 return 1;
             }
@@ -107,18 +84,14 @@ public class Client {
                 case 3:
                     System.out.println("Успішно");
                     break;
-                case 2:
                 case 4:
-                case 5:
-                case 6:
                     System.out.println(response[1]);
-                    break;
-                case 7:
-                case 9:
-                    outputSubjects(response[1]);
                     break;
                 case 8:
                     outputTeachers(response[1]);
+                    break;
+                case 9:
+                    outputSubjects(response[1]);
                     break;
             }
         } catch (IOException e) {
@@ -130,18 +103,14 @@ public class Client {
     /**
      * Меню програми
      */
-    public void menu() {
-        scanner = new Scanner(System.in);
+    public void menu() throws ExecutionException, InterruptedException {
+        Scanner scanner = new Scanner(System.in);
         int op;
         while (true) {
             System.out.println("Оберіть команду:");
             System.out.println("1. Прийом на роботу нового викладача");
-            System.out.println("2. Звільнення(видалення викладача)");
             System.out.println("3. Додавання нової дисципліни");
             System.out.println("4. Видалення дисципліни");
-            System.out.println("5. Редагування особистих даних викладача");
-            System.out.println("6. Запит кількості дисциплін у викладача");
-            System.out.println("7. Пошук дисципліни за назвою");
             System.out.println("8. Отримання повного списку викладачів");
             System.out.println("9. Отримання списку дисциплін для заданого викладача");
             System.out.println("0. Вихід із програми");
@@ -161,7 +130,47 @@ public class Client {
         }
     }
 
-    public static void main(String[] args) {
-        new Client();
+    public static void main(String[] argv) {
+        try (Client client = new Client()) {
+            client.menu();
+            for (int i = 0; i < 32; i++) {
+                String i_str = Integer.toString(i);
+                System.out.println(" [x] Requesting fib(" + i_str + ")");
+                String response = client.call(i_str);
+                System.out.println(" [.] Got '" + response + "'");
+            }
+        } catch (IOException | TimeoutException | InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String call(String message) throws IOException, InterruptedException, ExecutionException {
+        final String corrId = UUID.randomUUID().toString();
+
+        String replyQueueName = channel.queueDeclare().getQueue();
+        AMQP.BasicProperties props = new AMQP.BasicProperties
+                .Builder()
+                .correlationId(corrId)
+                .replyTo(replyQueueName)
+                .build();
+
+        channel.basicPublish("", requestQueueName, props, message.getBytes("UTF-8"));
+
+        final CompletableFuture<String> response = new CompletableFuture<>();
+
+        String ctag = channel.basicConsume(replyQueueName, true, (consumerTag, delivery) -> {
+            if (delivery.getProperties().getCorrelationId().equals(corrId)) {
+                response.complete(new String(delivery.getBody(), "UTF-8"));
+            }
+        }, consumerTag -> {
+        });
+
+        String result = response.get();
+        channel.basicCancel(ctag);
+        return result;
+    }
+
+    public void close() throws IOException {
+        connection.close();
     }
 }
