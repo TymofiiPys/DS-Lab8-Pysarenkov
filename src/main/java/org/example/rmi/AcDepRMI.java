@@ -14,6 +14,6 @@ public interface AcDepRMI extends Remote {
     int deleteSubject(String name) throws RemoteException;
     int updateTeacher(String oldName, String newName) throws RemoteException;
     List<Subject> subjOfTeacher(String teacherName) throws RemoteException;
-    Subject findSubj(String name) throws RemoteException;
+    List<Subject> findSubj(String name) throws RemoteException;
     List<Teacher> getAllTeachers() throws RemoteException;
 }
