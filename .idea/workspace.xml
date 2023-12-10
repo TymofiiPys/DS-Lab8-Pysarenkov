@@ -4,12 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1f15ebc7-b050-4418-af7c-f73b67c431a4" name="Changes" comment="Deleted redundant commands from mq.server">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/App.java" afterDir="false" />
+    <list default="true" id="1f15ebc7-b050-4418-af7c-f73b67c431a4" name="Changes" comment="Delete App.java">
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/mq/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mq/client/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/rmi/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/rmi/client/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/socket/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/socket/client/Client.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,7 +72,7 @@
       <workItem from="1701867787042" duration="11624000" />
       <workItem from="1702144613064" duration="13576000" />
       <workItem from="1702210907297" duration="3852000" />
-      <workItem from="1702225241310" duration="12230000" />
+      <workItem from="1702225241310" duration="12904000" />
     </task>
     <task id="LOCAL-00001" summary="Added task descr in app.java and packages for server and client parts">
       <option name="closed" value="true" />
@@ -174,7 +170,23 @@
       <option name="project" value="LOCAL" />
       <updated>1702249947658</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Task description in comments">
+      <option name="closed" value="true" />
+      <created>1702250124143</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1702250124143</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Delete App.java">
+      <option name="closed" value="true" />
+      <created>1702250164692</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1702250164693</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -203,7 +215,9 @@
     <MESSAGE value="RMIClient done, Teacher and Subject implement Serializable so they can be passed using RMI" />
     <MESSAGE value="Done JMS implementation" />
     <MESSAGE value="Deleted redundant commands from mq.server" />
-    <option name="LAST_COMMIT_MESSAGE" value="Deleted redundant commands from mq.server" />
+    <MESSAGE value="Task description in comments" />
+    <MESSAGE value="Delete App.java" />
+    <option name="LAST_COMMIT_MESSAGE" value="Delete App.java" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
