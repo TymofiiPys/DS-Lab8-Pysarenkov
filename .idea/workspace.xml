@@ -6,7 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="1f15ebc7-b050-4418-af7c-f73b67c431a4" name="Changes" comment="Implemented AcDepRMI methods">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/rmi/server/AcDepRMIImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/rmi/server/AcDepRMIImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/acdep/AcDepUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/acdep/AcDepUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/acdep/Subject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/acdep/Subject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/acdep/Teacher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/acdep/Teacher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/rmi/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/rmi/client/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/rmi/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/rmi/server/Server.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/socket/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/socket/server/Server.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -73,7 +77,8 @@
       <workItem from="1701820379217" duration="110000" />
       <workItem from="1701867787042" duration="11624000" />
       <workItem from="1702144613064" duration="13576000" />
-      <workItem from="1702210907297" duration="2412000" />
+      <workItem from="1702210907297" duration="3852000" />
+      <workItem from="1702225241310" duration="3722000" />
     </task>
     <task id="LOCAL-00001" summary="Added task descr in app.java and packages for server and client parts">
       <option name="closed" value="true" />
@@ -139,7 +144,15 @@
       <option name="project" value="LOCAL" />
       <updated>1702213228774</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Implemented AcDepRMI methods">
+      <option name="closed" value="true" />
+      <created>1702213557794</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1702213557794</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

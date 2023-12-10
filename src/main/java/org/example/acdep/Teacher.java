@@ -1,6 +1,8 @@
 package org.example.acdep;
 
-public class Teacher {
+import java.io.Serializable;
+
+public class Teacher implements Serializable {
     public int code;
     public String name;
 

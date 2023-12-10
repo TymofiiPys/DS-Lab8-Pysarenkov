@@ -136,12 +136,12 @@ public class Server {
                     if(subjectList.isEmpty()) {
                         response = "" + 1 + splitter + "Не знайдено такого предмету";
                     } else {
-                        response = "" + 0 + splitter + AcDepUtil.printListS(subjectList);
+                        response = "" + 0 + splitter + AcDepUtil.listToStringS(subjectList);
                     }
                 }
                 case 8 -> {
                     teacherList = dao.readTeachers(null);
-                    response = "" + 0 + splitter + AcDepUtil.printListT(teacherList);
+                    response = "" + 0 + splitter + AcDepUtil.listToStringT(teacherList);
                 }
                 case 9 -> {
                     Teacher teacher = AcDepUtil.getTeacher(dao.readTeachers(null), query[1]);
@@ -149,7 +149,7 @@ public class Server {
                         response = "" + 1 + splitter + "Учителя із даним ПІБ не знайдено";
                     } else {
                         subjectList = dao.readSubjects("SELECT * FROM Предмети WHERE Викладач = " + teacher.code);
-                        response = "" + 0 + splitter + AcDepUtil.printListS(subjectList);
+                        response = "" + 0 + splitter + AcDepUtil.listToStringS(subjectList);
                     }
                 }
                 default -> {

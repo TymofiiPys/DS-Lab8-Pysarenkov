@@ -10,7 +10,7 @@ public class Server {
     public static void main(String[] args) throws RemoteException {
         AcDepRMI acDepRMI = new AcDepRMIImpl();
         Registry registry = LocateRegistry.createRegistry(8080);
-        registry.rebind("Acdep", acDepRMI);
+        registry.rebind("AcDep", acDepRMI);
         System.out.println("Сервер запущено!");
     }
 

@@ -44,6 +44,12 @@ public class AcDepUtil {
         return i;
     }
 
+    /**
+     * Повертає об'єкт Teacher, що відповідає імені name, зі списку list
+     * @param list список вчителів
+     * @param name ім'я учителя
+     * @return Об'єкт Teacher, що відповідає імені name, null якщо не знайдено вчителя з іменем name
+     */
     public static Teacher getTeacher(List<Teacher> list, String name) {
         for (Teacher t : list) {
             if (t.name.equals(name)) {
@@ -53,6 +59,12 @@ public class AcDepUtil {
         return null;
     }
 
+    /**
+     * Повертає об'єкт Subject, що відповідає імені name, зі списку list
+     * @param list список предметів
+     * @param name назва предмету
+     * @return Об'єкт Subject, що відповідає імені name, null якщо не знайдено предмет з назвою name
+     */
     public static Subject getSubject(List<Subject> list, String name) {
         for (Subject t : list) {
             if (t.name.equals(name)) {
@@ -62,7 +74,7 @@ public class AcDepUtil {
         return null;
     }
 
-    public static String printListT(List<Teacher> list) {
+    public static String listToStringT(List<Teacher> list) {
         String res = "";
         int i = 0;
         int size = list.size();
@@ -77,7 +89,7 @@ public class AcDepUtil {
         return res;
     }
 
-    public static String printListS(List<Subject> list) {
+    public static String listToStringS(List<Subject> list) {
         String res = "";
         int i = 0;
         int size = list.size();
@@ -92,5 +104,20 @@ public class AcDepUtil {
             i++;
         }
         return res;
+    }
+
+    public static void printListT(List<Teacher> list) {
+        for (Teacher t : list) {
+            System.out.println("ID: " + t.code);
+            System.out.println("ПІБ: " + t.name);
+        }
+    }
+
+    public static void printListS(List<Subject> list) {
+        for (Subject t : list) {
+            System.out.println("ID: " + t.code);
+            System.out.println("Назва: " + t.name);
+            System.out.println("ПІБ викладача: " + t.teacher.name);
+        }
     }
 }
