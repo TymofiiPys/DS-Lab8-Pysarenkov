@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1f15ebc7-b050-4418-af7c-f73b67c431a4" name="Changes" comment="socket.Server uses AcDepUtil functions">
+    <list default="true" id="1f15ebc7-b050-4418-af7c-f73b67c431a4" name="Changes" comment="Implemented AcDepRMI methods">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/rmi/AcDepRMI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/rmi/AcDepRMI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/rmi/server/AcDepRMIImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/rmi/server/AcDepRMIImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/socket/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/socket/server/Server.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,7 +73,7 @@
       <workItem from="1701820379217" duration="110000" />
       <workItem from="1701867787042" duration="11624000" />
       <workItem from="1702144613064" duration="13576000" />
-      <workItem from="1702210907297" duration="2275000" />
+      <workItem from="1702210907297" duration="2412000" />
     </task>
     <task id="LOCAL-00001" summary="Added task descr in app.java and packages for server and client parts">
       <option name="closed" value="true" />
@@ -131,7 +131,15 @@
       <option name="project" value="LOCAL" />
       <updated>1702211400738</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Implemented AcDepRMI methods">
+      <option name="closed" value="true" />
+      <created>1702213228774</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1702213228774</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -156,7 +164,8 @@
     <MESSAGE value="Finished Sockets" />
     <MESSAGE value="Created class with utilitary functions for CRUD-operations (AcDepUtil)" />
     <MESSAGE value="socket.Server uses AcDepUtil functions" />
-    <option name="LAST_COMMIT_MESSAGE" value="socket.Server uses AcDepUtil functions" />
+    <MESSAGE value="Implemented AcDepRMI methods" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implemented AcDepRMI methods" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

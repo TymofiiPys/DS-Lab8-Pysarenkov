@@ -13,7 +13,7 @@ import java.util.List;
 
 public class AcDepRMIImpl extends UnicastRemoteObject implements AcDepRMI {
 
-    private AcDepDAO dao;
+    private final AcDepDAO dao;
 
     public AcDepRMIImpl() throws RemoteException {
         try {
